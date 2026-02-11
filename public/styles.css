@@ -168,6 +168,17 @@ body {
     0 0 18px rgba(14, 165, 233, 0.8);
 }
 
+.btn.secondary {
+  background: rgba(15, 23, 42, 0.95);
+  color: #e5e7eb;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.btn.small {
+  padding-inline: 14px;
+  font-size: 13px;
+}
+
 .btn.primary:active {
   transform: translateY(1px) scale(0.98);
   box-shadow:
@@ -350,5 +361,13 @@ body {
     0 18px 40px rgba(15, 23, 42, 0.9),
     0 0 24px rgba(56, 189, 248, 0.25);
 }
+
+.pong-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+}
+
 
 

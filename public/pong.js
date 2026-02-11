@@ -3,6 +3,9 @@
 const canvas = document.getElementById('pongCanvas');
 const ctx = canvas.getContext('2d');
 const scoreElPong = document.getElementById('pongScore');
+const leftBtn = document.getElementById('pongLeft');
+const rightBtn = document.getElementById('pongRight');
+const restartBtnPong = document.getElementById('pongRestart');
 
 const W = canvas.width;
 const H = canvas.height;
@@ -141,17 +144,17 @@ function loop(timestamp) {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.code === 'ArrowLeft') {
+  const code = e.code || e.key;
+
+  if (code === 'ArrowLeft') {
     e.preventDefault();
     paddle.dx = -paddle.speed;
-  } else if (e.code === 'ArrowRight') {
+  } else if (code === 'ArrowRight') {
     e.preventDefault();
     paddle.dx = paddle.speed;
-  } else if (e.code === 'Space') {
+  } else if (code === 'Space' || code === 'Spacebar' || code === ' ') {
     e.preventDefault();
-    if (!running) {
-      resetGame();
-    }
+    resetGame();
   }
 });
 
@@ -160,6 +163,43 @@ document.addEventListener('keyup', (e) => {
     paddle.dx = 0;
   }
 });
+
+// On-screen buttons
+if (leftBtn && rightBtn && restartBtnPong) {
+  const startMoveLeft = () => {
+    paddle.dx = -paddle.speed;
+  };
+  const startMoveRight = () => {
+    paddle.dx = paddle.speed;
+  };
+  const stopMove = () => {
+    paddle.dx = 0;
+  };
+
+  leftBtn.addEventListener('mousedown', startMoveLeft);
+  leftBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startMoveLeft();
+  });
+  leftBtn.addEventListener('mouseup', stopMove);
+  leftBtn.addEventListener('mouseleave', stopMove);
+  leftBtn.addEventListener('touchend', stopMove);
+  leftBtn.addEventListener('touchcancel', stopMove);
+
+  rightBtn.addEventListener('mousedown', startMoveRight);
+  rightBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    startMoveRight();
+  });
+  rightBtn.addEventListener('mouseup', stopMove);
+  rightBtn.addEventListener('mouseleave', stopMove);
+  rightBtn.addEventListener('touchend', stopMove);
+  rightBtn.addEventListener('touchcancel', stopMove);
+
+  restartBtnPong.addEventListener('click', () => {
+    resetGame();
+  });
+}
 
 if (window.Telegram && window.Telegram.WebApp) {
   Telegram.WebApp.ready();
