@@ -1,0 +1,21 @@
+{
+  "name": "mini-app-tetris",
+  "version": "1.0.0",
+  "description": "Telegram Mini App Tetris game",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "telegram",
+    "webapp",
+    "mini-app",
+    "tetris"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-telegram-bot-api": "^0.65.1"
+  }
+}
