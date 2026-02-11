@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ping Pong</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <button class="back-btn" onclick="window.location.href='/'">← Меню</button>
+        <h1 class="title">PING&nbsp;PONG</h1>
+        <div class="score-panel">
+          <div class="score-label">Счёт</div>
+          <div id="pongScore" class="score-value">0</div>
+        </div>
+      </header>
+
+      <main class="main">
+        <div class="pong-wrapper">
+          <canvas id="pongCanvas" width="320" height="420" class="pong-canvas"></canvas>
+          <div class="controls-hint">
+            <div class="panel-title">Управление</div>
+            <p>⬅ ➡ — двигать ракетку</p>
+            <p>Пробел — начать / заново</p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="pong.js"></script>
+  </body>
+</html>
+

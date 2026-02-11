@@ -2,44 +2,45 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8" />
-    <title>Tetris Mini App</title>
+    <title>Mini Arcade</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="stylesheet" href="styles.css" />
-    <!-- Telegram WebApp SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <div class="app">
-      <header class="header">
-        <h1 class="title">TETRIS</h1>
-        <div class="score-panel">
-          <div class="score-label">Счёт</div>
-          <div id="score" class="score-value">0</div>
-        </div>
+      <header class="header header-center">
+        <h1 class="title">MINI&nbsp;ARCADE</h1>
       </header>
 
       <main class="main">
-        <div class="game-wrapper">
-          <div id="grid" class="grid"></div>
-          <div class="side-panel">
-            <div class="next-block">
-              <div class="panel-title">Следующая</div>
-              <div id="next" class="next-grid"></div>
-            </div>
-            <div class="controls-hint">
-              <div class="panel-title">Управление</div>
-              <p>⬅ ➡ — влево / вправо</p>
-              <p>⬇ — быстрее вниз</p>
-              <p>⟳ / ↑ — поворот</p>
-              <p>Пробел — мгновенно вниз</p>
-            </div>
-            <button id="restartBtn" class="btn primary">Сначала</button>
+        <div class="menu">
+          <p class="menu-subtitle">Выбери игру:</p>
+          <div class="menu-grid">
+            <a class="game-card" href="tetris.html">
+              <div class="game-card-badge">Классика</div>
+              <h2 class="game-card-title">Tetris</h2>
+              <p class="game-card-desc">Заполняй линии, набирай максимум очков.</p>
+              <span class="game-card-cta">Играть →</span>
+            </a>
+
+            <a class="game-card" href="pong.html">
+              <div class="game-card-badge game-card-badge-green">Аркада</div>
+              <h2 class="game-card-title">Ping Pong</h2>
+              <p class="game-card-desc">Очень лёгкий пинг‑понг: отбивай мяч одной ракеткой.</p>
+              <span class="game-card-cta">Играть →</span>
+            </a>
           </div>
         </div>
       </main>
     </div>
 
-    <script src="game.js"></script>
+    <script>
+      if (window.Telegram && window.Telegram.WebApp) {
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+      }
+    </script>
   </body>
 </html>
 
