@@ -6,6 +6,7 @@ const scoreElPong = document.getElementById('pongScore');
 const leftBtn = document.getElementById('pongLeft');
 const rightBtn = document.getElementById('pongRight');
 const restartBtnPong = document.getElementById('pongRestart');
+const speedBtn = document.getElementById('pongSpeed');
 
 const W = canvas.width;
 const H = canvas.height;
@@ -30,13 +31,28 @@ const ball = {
 let scorePong = 0;
 let running = false;
 let lastTime = 0;
+let speedLevel = 1; // 1 = норм, 2 = быстро, 3 = угар
+let speedFactor = 1;
+
+function updateSpeedFactor() {
+  if (speedLevel === 1) speedFactor = 1;
+  else if (speedLevel === 2) speedFactor = 1.6;
+  else speedFactor = 2.4;
+}
+
+function applySpeedToBall(prevFactor) {
+  const ratio = speedFactor / prevFactor;
+  ball.vx *= ratio;
+  ball.vy *= ratio;
+}
 
 function resetBall() {
   ball.x = W / 2;
   ball.y = H / 2;
   const dirX = Math.random() > 0.5 ? 1 : -1;
-  ball.vx = 3 * dirX;
-  ball.vy = -4;
+  const base = 4 * speedFactor;
+  ball.vx = base * 0.6 * dirX;
+  ball.vy = -base;
 }
 
 function resetGame() {
@@ -113,13 +129,13 @@ function update(dt) {
     ball.vy > 0
   ) {
     ball.y = paddle.y - ball.r;
-    ball.vy *= -1;
+    ball.vy = -Math.abs(ball.vy) || -(4 * speedFactor);
     scorePong += 1;
     scoreElPong.textContent = scorePong;
 
     // angle based on hit position
     const hitPos = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
-    ball.vx = 4 * hitPos;
+    ball.vx = (4 * speedFactor) * hitPos;
   }
 
   // miss
@@ -199,6 +215,23 @@ if (leftBtn && rightBtn && restartBtnPong) {
   restartBtnPong.addEventListener('click', () => {
     resetGame();
   });
+
+  if (speedBtn) {
+    speedBtn.addEventListener('click', () => {
+      const prev = speedFactor;
+      speedLevel = speedLevel === 3 ? 1 : speedLevel + 1;
+      updateSpeedFactor();
+      applySpeedToBall(prev);
+
+      if (speedLevel === 1) {
+        speedBtn.textContent = 'Скорость: норм';
+      } else if (speedLevel === 2) {
+        speedBtn.textContent = 'Скорость: быстро';
+      } else {
+        speedBtn.textContent = 'Скорость: угар';
+      }
+    });
+  }
 }
 
 if (window.Telegram && window.Telegram.WebApp) {
@@ -206,6 +239,7 @@ if (window.Telegram && window.Telegram.WebApp) {
   Telegram.WebApp.expand();
 }
 
+updateSpeedFactor();
 resetGame();
 requestAnimationFrame(loop);
 
